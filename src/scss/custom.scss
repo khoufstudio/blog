@@ -1,0 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand:200,300,400,700);
+$headings-font-family:Quicksand;
+$font-family-base: Quicksand;
+$enable-gradients:false;
+$spacer:0.7rem;
+$border-width:1px;
+$btn-border-radius:.25rem;
+
+$theme-colors: (
+  "primary":#4275a3,
+  "secondary":#6f7f8c,
+  "success":#3e4d59,
+  "danger":#cc330d,
+  "info":#5c8f94,
+  "warning":#6e9fa5,
+  "light":#eceeec,
+  "dark":#1e2b37,
+);
+
+@import "~bootstrap/scss/bootstrap";
+
+
+
+
+
+
+
+

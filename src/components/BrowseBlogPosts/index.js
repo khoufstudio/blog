@@ -1,15 +1,18 @@
 import React from "react"
 import { Container, Button, Navbar, Pagination } from "react-bootstrap"
 import { graphql, Link } from 'gatsby'
-import './index.scss'
-import Layout from '../components/Layout'
-import Card from '../components/Card'
+import Layout from '../Layout'
+import Card from '../Card'
 
 export default function Home({ data }) {
   const siteMetadata = data.site.siteMetadata
+  // 6 = total per page
+  const totalPages = Math.ceil(data.allMdx.pageInfo.totalCount/6)
+  const activePage = data.allMdx.pageInfo.currentPage
+
   return (
     <>
-      <Layout title='khoustudio - Blog'>
+      <Layout title='Halaman 1'>
         <div className="d-flex flex-wrap justify-content-around justify-content-md-between">
           {data.allMdx.nodes.map(({ excerpt, frontmatter, fields}, index) => (
             <Card 
@@ -24,12 +27,15 @@ export default function Home({ data }) {
         </div>
         <div className="text-center mt-5">
           <Pagination>
-            <Pagination.First />
+            <Pagination.First href="1" />
             <Pagination.Prev />
-            <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Item>{20}</Pagination.Item>
+            {
+              Array.from({ length: totalPages }).map((_, index) => ( 
+                <Pagination.Item key={++index} href={index.toString()} active={index == activePage}>{index}</Pagination.Item>
+              ))
+            }
             <Pagination.Next />
-            <Pagination.Last />
+            <Pagination.Last href={totalPages.toString()} />
           </Pagination>
         </div>
       </Layout>
@@ -39,7 +45,7 @@ export default function Home({ data }) {
 
 export const query = graphql
 `
-  query HomePageQuery {
+  query HomexPageQuery($skip: Int!, $limit: Int!) {
     site {
       siteMetadata {
         title
@@ -49,7 +55,15 @@ export const query = graphql
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { published: { eq: true } } }
+      limit: $limit
+      skip: $skip
     ) {
+      totalCount
+      edges {
+        node {
+          id
+        }
+      }
       nodes {
         id
         excerpt(pruneLength: 250)
@@ -63,6 +77,15 @@ export const query = graphql
         fields {
           slug
         }
+      }
+      pageInfo {
+        currentPage
+        hasNextPage
+        hasPreviousPage
+        itemCount
+        pageCount
+        perPage
+        totalCount
       }
     }
   }

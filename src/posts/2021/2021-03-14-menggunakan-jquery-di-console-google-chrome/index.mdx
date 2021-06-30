@@ -1,0 +1,15 @@
+---
+title: "Menggunakan JQuery di Console Google Chrome"
+date: 2021-03-14
+published: true
+thumbnail: jquery_logo.png
+---
+
+Untuk menjalankan jquery di console google chrome, bisa paste kode dibawah ini di console chrome kalian: 
+
+````javascript
+var jqry = document.createElement('script');
+jqry.src = "https://code.jquery.com/jquery-3.3.1.min.js";
+document.getElementsByTagName('head')[0].appendChild(jqry);
+jQuery.noConflict();
+````
