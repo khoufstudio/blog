@@ -12,7 +12,7 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Layout title='Halaman 1'>
+      <Layout title={'Page ' + activePage}>
         <div className="d-flex flex-wrap justify-content-around justify-content-md-between">
           {data.allMdx.nodes.map(({ excerpt, frontmatter, fields}, index) => (
             <Card 
@@ -24,14 +24,17 @@ export default function Home({ data }) {
               thumbnail={ frontmatter.thumbnail }
             />
            ))}
+          { data.allMdx.nodes.length % 2 != 0 && 
+            <div style={{ width: "19rem" }} />
+          }
         </div>
-        <div className="text-center mt-5">
+        <div className="d-flex justify-content-center mt-5">
           <Pagination>
             <Pagination.First href="1" />
             <Pagination.Prev />
             {
               Array.from({ length: totalPages }).map((_, index) => ( 
-                <Pagination.Item key={++index} href={index.toString()} active={index == activePage}>{index}</Pagination.Item>
+                <Pagination.Item key={++index} href={(index > 1) ? '/page/' + index.toString() : '/' } active={index == activePage}>{index}</Pagination.Item>
               ))
             }
             <Pagination.Next />

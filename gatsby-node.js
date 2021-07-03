@@ -43,17 +43,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const postsPerPage = 6
   const numPages = Math.ceil(posts.length / postsPerPage)
 
+  // create index page
+  createPage({
+    path: `/`,
+    component: path.resolve(`./src/components/BrowseBlogPosts/index.js`),
+    context: {
+      limit: 6,
+      skip: 0,
+      numPages,
+      currentPage: 1
+    }
+  })
+
   Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
-      path: `/page/${i+1}`,
-      component: path.resolve(`./src/components/BrowseBlogPosts/index.js`),
-      context: {
-        limit: 6,
-        skip: i * postsPerPage,
-        numPages,
-        currentPage: i + 1
-      }
-    })
+    if (i > 0) {
+      createPage({
+        path: `/page/${i+1}`,
+        component: path.resolve(`./src/components/BrowseBlogPosts/index.js`),
+        context: {
+          limit: 6,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1
+        }
+      })
+    }
   })
 
   posts.forEach(({ node }, index) => {
