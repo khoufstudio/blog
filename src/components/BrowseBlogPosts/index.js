@@ -1,8 +1,9 @@
 import React from "react"
-import { Container, Button, Navbar, Pagination } from "react-bootstrap"
+import { Container, Button, Navbar } from "react-bootstrap"
 import { graphql, Link } from 'gatsby'
 import Layout from '../Layout'
 import Card from '../Card'
+import Pagination from '../Pagination'
 
 export default function Home({ data }) {
   const siteMetadata = data.site.siteMetadata
@@ -12,7 +13,7 @@ export default function Home({ data }) {
 
   return (
     <>
-      <Layout title={'Page ' + activePage}>
+      <Layout title={(activePage == 1) ? 'Blog' : 'Blog - Page ' + activePage}>
         <div className="d-flex flex-wrap justify-content-around justify-content-md-between">
           {data.allMdx.nodes.map(({ excerpt, frontmatter, fields}, index) => (
             <Card 
@@ -24,22 +25,17 @@ export default function Home({ data }) {
               thumbnail={ frontmatter.thumbnail }
             />
            ))}
-          { data.allMdx.nodes.length % 2 != 0 && 
+          { data.allMdx.nodes.length % 2 != 0 || data.allMdx.nodes.length < 3 && 
             <div style={{ width: "19rem" }} />
           }
         </div>
         <div className="d-flex justify-content-center mt-5">
-          <Pagination>
-            <Pagination.First href="1" />
-            <Pagination.Prev />
-            {
-              Array.from({ length: totalPages }).map((_, index) => ( 
-                <Pagination.Item key={++index} href={(index > 1) ? '/page/' + index.toString() : '/' } active={index == activePage}>{index}</Pagination.Item>
-              ))
-            }
-            <Pagination.Next />
-            <Pagination.Last href={totalPages.toString()} />
-          </Pagination>
+          { totalPages > 6 &&
+            <Pagination 
+              totalPages={totalPages}
+              activePage={activePage}
+            />
+          }
         </div>
       </Layout>
     </>
