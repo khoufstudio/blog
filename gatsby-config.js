@@ -5,8 +5,9 @@
  */
 
 module.exports = {
+  pathPrefix: `/`,
   siteMetadata: {
-    title: `The Localhost Blog`,
+    title: `Khoufstudio Blog`,
     description: `This is my coding blog where I write about my coding journey.`,
   },
   plugins: [
