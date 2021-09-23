@@ -1,0 +1,79 @@
+---
+title: "Sekilas tentang var di Javascript"
+date: 2021-07-14
+published: true
+thumbnail: js-tutorial-logo.png
+---
+
+![js tutorial logo](js-tutorial-logo.png)
+
+**Var** merupakan salah satu _statement_ untuk mendeklarasikan variabel di Javascript. 
+Var merupakan _statement_ yang telah digunakan sebelum adanya standar **ES6 (ES2015)**.
+Pada artikel ini akan dijelaskan tentang **var** di javascript. Khususnya tentang **scope** dan **hoisting**. 
+
+### Scope dari var
+Scope adalah jangkauan dimana variabel dapat digunakan. Var memiliki scope global dan local/function. 
+
+````javascript
+var globalVariable = 'global'
+
+function test() {
+  var localVariable = 'local'
+  console.log(localVariable) // 'local'
+  console.log(globalVariable) // 'global'
+}
+
+test()
+console.log(globalVariable) // 'global'
+console.log(localVariable) // Error: localVariable is not defined
+````
+
+Pada potongan kode diatas, sesuai dengan namanya **globalVariable** merupakan variabel global dan **localVariable** merupakan variabel lokal. 
+Variabel global adalah variabel yang didefinisikan dibagian terluar suatu scope, sehingga variabel ini dapat digunakan dimana saja. 
+Sedangkan variabel lokal adalah variabel yang definisikan disuatu scope yang lebih kecil (misal dalam sebuah fungsi), sehingga variabel lokal hanya dapat digunakan di dalam fungsi tersebut saja. Jika digunakan diluar fungsi akan menyebabkan error. 
+
+### Var dapat dideklarasi ulang dalam scope yang sama
+Dengan menggunakan var, aplikasi tidak akan error jika ada dua deklarasi variabel dalam satu scope
+
+````javascript
+var name = 'john'
+var name = 'joe'
+````
+
+### Hoisting pada var
+Di javascript, hoisting merupakan mekanisme dimana pendefinisian fungsi dan variabel dipindah ke atas (sesuai dengan scopenya) sebelum dieksekusi. 
+Maka di javascript kita bisa menulis dengan cara seperti ini:
+
+````javascript
+console.log(name) // undefined
+var name = 'john'
+````
+
+Akan sama dengan ini
+
+````javascript
+var name
+console.log(name) // undefined
+name = 'john'
+````
+
+Pada kode diatas terlihat bahwa variabel `name` secara otomatis definisikan diatas `console.log(name)` dan nilainya (karena belum didefinisikan) adalah _undefined_. 
+Hal ini berbeda dengan let dan const yang mana tidak otomatis terdefinisikan di posisi paling atas (sesuai scopenya).
+
+### Masalah pada var
+Ada beberapa masalah yang dapat muncul, diantaranya seperti yang terjadi pada kode di bawah ini:
+
+````javascript
+var name = 'John' // name = Mr. John
+var married = true
+
+if (married) {
+  var name = 'Mr. ' + name // name = Mr. John
+}
+
+console.log(name) // name = Mr. John
+````
+
+Pada kode diatas, karena married = true maka kode di line 5 akan dieksekusi sehingga isi variabel `name` akan menjadi **Mr. John**. 
+Hal ini sebenarnya tidak masalah jika kita sudah mengetahui jika variabel `name` akan berubah atau memang berencana untuk melakukannya. 
+Tetapi jika kita ingin mempertahankan nilai dari variabel `name`, maka hal itu akan menjadi masalah/bug pada kode. 
