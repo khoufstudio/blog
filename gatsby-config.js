@@ -4,16 +4,32 @@
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
-  pathPrefix: `/`,
   siteMetadata: {
     title: `Khoufstudio Blog`,
     description: `This is my coding blog where I write about my coding journey.`,
   },
   plugins: [
     `gatsby-plugin-sass`,
-    `gatsby-plugin-sharp`,
     `gatsby-remark-images`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 800,
+            },
+          },
+        ],
+      },
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-mdx`,
@@ -22,7 +38,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 1200,
+              maxWidth: 640,
             },
           },
         ],
@@ -38,8 +54,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-disqus`,
       options: {
-        shortname: `khoufstudio-blog`
+        shortname: `khoufstudio`
       }
     },
   ],
 }
+

@@ -28,6 +28,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             fields {
               slug
             }
+            frontmatter {
+              published
+            }
           }
         }
       }
@@ -39,7 +42,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // Create blog post pages.
-  const posts = result.data.allMdx.edges
+  const posts = result.data.allMdx.edges.filter(edge => edge.node.frontmatter.published)
   const postsPerPage = 6
   const numPages = Math.ceil(posts.length / postsPerPage)
 
@@ -77,5 +80,4 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: { id: node.id },
     })
   })
-  //
 }

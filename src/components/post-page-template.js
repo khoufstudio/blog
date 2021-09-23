@@ -20,6 +20,9 @@ query PostsByID($id: String!) {
     frontmatter {
       title
       date(formatString: "Do MMMM YYYY", locale: "id")
+      thumbnail {
+        publicURL
+      }
     }
   }
 }
@@ -27,12 +30,12 @@ query PostsByID($id: String!) {
 
 export default ({ data }) => {
   const { frontmatter, body } = data.mdx
-  const title = frontmatter.title ? frontmatter.title : 'khoufstudio blog'
+  const title = frontmatter.title
   return (
     <Layout title={title}>
       <div className="mt-4" />      
       <h1>{frontmatter.title}</h1>
-      <p>{frontmatter.date}</p>
+      <p className="font-weight-lighter">{frontmatter.date}</p>
       <MDXRenderer components={components}>{body}</MDXRenderer>
     </Layout>
   )
