@@ -21,6 +21,8 @@ export default function Home({ data }) {
               title={ frontmatter.title } 
               desc={ excerpt.substring(0, 50) + '..' }
               thumbnail={ frontmatter.thumbnail }
+              tags={ frontmatter.tags }
+              date={ frontmatter.date }
             />
            ))}
           { (data.allMdx.nodes.length % 2 !== 0 || data.allMdx.nodes.length < 3) && 
@@ -66,7 +68,8 @@ export const query = graphql
         excerpt(pruneLength: 250)
         frontmatter {
             title
-            date
+            date(formatString: "DD/MM/YYYY", locale: "id")
+            tags
 						thumbnail {
 							publicURL
 						}

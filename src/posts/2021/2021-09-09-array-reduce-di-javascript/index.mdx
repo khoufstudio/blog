@@ -3,16 +3,13 @@ title: "Array reduce di Javascript"
 date: 2021-09-09
 published: true
 thumbnail: js-tutorial-logo.png
+tags: ["JS Basic", "ES6"]
 ---
 
 ![js tutorial logo](js-tutorial-logo.png)
 
-**Var** merupakan salah satu _statement_ untuk mendeklarasikan variabel di Javascript. 
-Var merupakan _statement_ yang telah digunakan sebelum adanya standar **ES6 (ES2015)**.
-Pada artikel ini akan dijelaskan tentang **var** di javascript. Khususnya tentang **scope** dan **hoisting**. 
-
-### Scope dari var
-Scope adalah jangkauan dimana variabel dapat digunakan. Var memiliki scope global dan local/function. 
+Fungsi `reduce()` digunakan untuk mengeksekusi setiap nilai pada array yang akan menghasilkan satu nilai saja. Pada setiap iterasi ia akan mengembalikan nilai kalkukasi hasil dari iterasi sebelumnya. Untuk lebih mudah memahaminya kita dapat
+membuat fungsi untuk menjumlahkan seluruh nilai pada array.
 
 ````javascript
 const array1 = [1, 2, 3, 4];
@@ -22,7 +19,28 @@ const reducer = (previousValue, currentValue) => previousValue + currentValue;
 console.log(array1.reduce(reducer));
 // expected output: 10
 
-// 5 + 1 + 2 + 3 + 4
-console.log(array1.reduce(reducer, 5));
-// expected output: 15
 ````
+
+Pada potongan kode diatas kita lihat bahwa variabel `array1` memiliki nilai di dalamnya 1, 2, 3, dan 4. Kemudian didefinisikan fungsi reducer:
+````javascript
+const reducer = (previousValue, currentValue) => previousValue + currentValue;
+````
+Fungsi diatas akan mengembalikan nilai hasil penjumlahan antara nilai sebelumnya dan nilai pada saat iterasi berlangsung. Berikut penjelasannya. 
+
+**Pada iterasi yang pertama:**
+
+previousValue: 0 (pertama kali iterasi nilai previousValue akan sama dengan 0)
+
+currentValue: 1
+
+hasil penjumlahan: 0 + 1 = 1
+
+**Pada iterasi yang kedua:**
+
+previousValue: 1 (sesuai dengan hasil penjumlahan sebelumnya)
+
+currentValue: 2
+
+hasil penjumlahan: 1 + 2 = 1
+
+Sampai seluruh iterasi dilakukan nilainya akan menjadi 10. Jangan lupa untuk memanggil fungsi reducer yang telah kita buat, misal dalam contoh ini adalah `array1.reduce(reducer)`
