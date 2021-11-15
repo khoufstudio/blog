@@ -10,7 +10,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value: `/posts${value}`,
+      value: `/blog/posts${value}`,
     })
   }
 }
@@ -48,7 +48,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // create index page
   createPage({
-    path: `/`,
+    path: `/blog`,
     component: path.resolve(`./src/components/BrowseBlogPosts/index.js`),
     context: {
       limit: 6,
@@ -61,7 +61,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   Array.from({ length: numPages }).forEach((_, i) => {
     if (i > 0) {
       createPage({
-        path: `/page/${i+1}`,
+        path: `/blog/page/${i+1}`,
         component: path.resolve(`./src/components/BrowseBlogPosts/index.js`),
         context: {
           limit: 6,
@@ -76,7 +76,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   posts.forEach(({ node }, index) => {
     createPage({
       path: node.fields.slug,
-      component: path.resolve(`./src/components/post-page-template.js`),
+      component: path.resolve(`./src/components/PostPageTemplate/index.js`),
       context: { id: node.id },
     })
   })

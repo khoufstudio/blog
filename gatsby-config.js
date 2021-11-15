@@ -17,6 +17,7 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-remark-images`,
     `gatsby-plugin-sharp`,
+    `react-bootstrap`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
