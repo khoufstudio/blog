@@ -1,0 +1,45 @@
+---
+title: "Perbedaan `UNION` dan `UNION ALL` di MySQL"
+date: 2021-10-23
+published: true
+thumbnail: mysql-tutorial-logo.png
+tags: ["MySQL Basic"]
+---
+
+Di MySQL terdapat perintah `UNION` dan `UNION ALL`. Yang mana fungsi dari kedua fungsi itu adalah menggabungkan dua query dengan jumlah field dan nama yang sama.
+Adapun perbedaannya, `UNION` menghilangkan duplikat data, sementara `UNION ALL` tidak. Ilustrasi dapat dilihat pada contoh dibawah ini:
+
+**Contoh kasus (menggunakan `UNION`):**
+````sql
+SELECT 'foo' AS bar
+`UNION`
+SELECT 'foo' AS bar
+
+-- hasilnya 
++-----+
+| bar |
++-----+
+| foo |
++-----+
+1 row in set (0.00 sec) 
+````
+
+
+
+**Contoh kasus (menggunakan `UNION ALL`):**
+````sql
+SELECT 'foo' AS bar
+`UNION ALL`
+SELECT 'foo' AS bar
+
+-- hasilnya 
++-----+
+| bar |
++-----+
+| foo |
++-----+
+| foo |
++-----+
+2 rows in set (0.00 sec) 
+````
+Sumber: https://stackoverflow.com/questions/49925/what-is-the-difference-between-union-and-union-all
