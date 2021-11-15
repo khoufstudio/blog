@@ -5,7 +5,6 @@ import Card from '../Card'
 import Pagination from '../Pagination'
 
 export default function Home({ data }) {
-  // 6 = total per page
   const totalPages = Math.ceil(data.allMdx.pageInfo.totalCount/6)
   const activePage = data.allMdx.pageInfo.currentPage
 
@@ -30,7 +29,7 @@ export default function Home({ data }) {
           }
         </div>
         <div className="d-flex justify-content-center mt-5">
-          { (totalPages > 6) &&
+          { (totalPages > 1) &&
             <Pagination 
               totalPages={totalPages}
               activePage={activePage}
