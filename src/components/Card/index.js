@@ -19,7 +19,7 @@ export default function CardBootstrap({ title, style, slug, desc, thumbnail, tag
 				</Card.Title>
         <div className="d-flex justify-content-between">
           <CategoryBadge tags={tags} />
-          <p className="m-0 text-muted" style={{fontSize: '14px'}}>{date}</p>
+          <p className="m-0 text-muted" style={{fontSize: '14px', lineHeight: '2'}}>{date}</p>
         </div>
       </Card.Body>
     </Card>
