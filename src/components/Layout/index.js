@@ -10,7 +10,7 @@ export default function Layout({ children, title }) {
       <Helmet>
         <title>{process.env.TITLE} - {title}</title>
       </Helmet>
-      <Navbar bg="primary" sticky="top" height="60">
+      <Navbar bg="dark" sticky="top" height="60">
         <Container>
           <Navbar.Brand href="/" className="text-white">
 						<img
@@ -25,7 +25,7 @@ export default function Layout({ children, title }) {
       <Container className="px-3 px-md-0 mb-5 pb-5" style={{minHeight: "800px"}}>
 				{ children }
       </Container>
-			<footer className="bg-primary" style={{height: "70px"}}>
+			<footer className="bg-dark" style={{height: "70px"}}>
 				<Container className="d-flex justify-content-center align-items-center h-100">
 					<p className="text-center m-0 text-white">This blog is made using <strong>Gatsby.js</strong></p>
 				</Container>
