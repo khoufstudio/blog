@@ -15,11 +15,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
+const filter = (process.env.SHOW_PUBLISHED_ONLY == 'true') ? { frontmatter: { published: { eq: true } } } : {frontmatter: { published: { eq: false } }}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  const result = await graphql
-  (`
+  let queryBlogPost = `
     query {
       allMdx {
         edges {
@@ -35,14 +36,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         }
       }
     }
-  `)
+  `
+  const result = await graphql(queryBlogPost)
 
   if (result.errors) {
     reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query')
   }
 
   // Create blog post pages.
-  const posts = result.data.allMdx.edges.filter(edge => edge.node.frontmatter.published)
+  const posts = (process.env.SHOW_PUBLISHED_ONLY === 'true') ? 
+    result.data.allMdx.edges.filter(edge => edge.node.frontmatter.published)
+    : result.data.allMdx.edges
+  
   const postsPerPage = 6
   const numPages = Math.ceil(posts.length / postsPerPage)
 
@@ -54,7 +59,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       limit: 6,
       skip: 0,
       numPages,
-      currentPage: 1
+      currentPage: 1,
+      filter: (process.env.SHOW_PUBLISHED_ONLY === 'true') ? { frontmatter: { published: { eq: true } } } : { frontmatter: {} }
     }
   })
 
@@ -67,7 +73,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           limit: 6,
           skip: i * postsPerPage,
           numPages,
-          currentPage: i + 1
+          currentPage: i + 1,
+          filter: (process.env.SHOW_PUBLISHED_ONLY === 'true') ? { frontmatter: { published: { eq: true } } } : { frontmatter: {}}
         }
       })
     }

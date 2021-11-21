@@ -43,7 +43,7 @@ export default function Home({ data }) {
 
 export const query = graphql
 `
-  query HomexPageQuery($skip: Int!, $limit: Int!) {
+  query HomexPageQuery($skip: Int!, $limit: Int!, $filter: MdxFilterInput) {
     site {
       siteMetadata {
         title
@@ -52,7 +52,7 @@ export const query = graphql
     }
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { published: { eq: true } } }
+      filter: $filter
       limit: $limit
       skip: $skip
     ) {
