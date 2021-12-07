@@ -1,0 +1,93 @@
+---
+title: "Ekspor CSV menggunakan PHP dan MySQL"
+date: 2021-12-09
+tags: ["PHP", "MySQL"]
+published: false
+thumbnail: php-mysql-tutorial.png
+---
+
+Pada tutorial ini kita akan belajar tentang cara ekspor CSV menggunakan PHP dan MySQL. Sampel database yang akan digunakan dapat diunduh pada link berikut:
+
+https://github.com/datacharmer/test_db
+
+Setelah database terunduh, kemudian buat projek folder. Misal kita berinama `php_mysql_export_csv`. Setelah folder dibuat tambahkan file `connection.php` di folder tersebut. File ini digunakan untuk menghubungi PHP dan MySQL. Kemudian isi dengan potongan kode di bawah ini:
+
+````
+<?php
+
+// sesuaikan dengan setting di pc/laptop kalian
+$servername = 'localhost'; 
+$username = 'root'; 
+$password = '';
+$database = 'employee';
+
+// buat koneksi database
+$connection = mysqli_connect($servername, $username, $password, $database);
+
+// cek koneksi
+if (!$connection) {
+    die("Connection failed: " . mysqli_connect_error());
+} 
+````
+Sesuaikan dulu file diatas dengan setting yang terdapat di pc/laptop kalian. Setelah itu cek terlebih dahulu dengan menjalankan perintah berikut di terminal/cli: 
+
+````bash
+$ php connection.php
+````
+
+Jika tidak ada tulisan apapun yang muncul, maka file konfigurasi sudah berhasil. Kalo masih belum, cek kembali dan sesuaikan isi dari file tersebut. Setelah koneksi sukses langkah berikutnya adalah membuat file `download_csv.php` yang isinya sebagai berikut: 
+
+````
+<?php
+
+include 'connection.php';
+
+$query = $connection->query('SELECT * FROM employees');
+
+if ($query->num_rows > 0) {
+    $filename = 'ekspor_csv_' . date('d-m-Y') . '.csv';
+    $delimiter = ',';
+
+    // Create file pointer
+    $file = fopen('php://memory', 'w');
+
+    $fields = array('name', 'email');
+
+    fputcsv($file, $fields, $delimiter);
+
+    while ($row = $query->fetch_object()) {
+        $lineData = array("$row->first_name  $row->last_name", $row->last_name);
+        fputcsv($file, $lineData, $delimiter);
+    }
+
+    // Move back to beginning of file
+    fseek($file, 0);
+
+    // Set headers to download file rather than displayed
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '";');
+
+    // Output all remaining data on a file pointer
+    fpassthru($file);
+}
+
+exit;
+
+````
+
+Setelah file `export_csv.php` dibuat, kita bisa jalankan perintah di bawah ini melalui terminal/cli.
+
+````bash
+$ php -S localhost:8000
+$ curl localhost:8000/export_csv.php > export.csv
+````
+
+Hasil file ekspor dapat dilihat di `export.csv` di folder projek yang telah kita buat. Selain melalui cli/terminal, kita juga dapat mengunduh file csv tersebut melalui browser. Caranya adalah dengan membuka [link](http://localhost:8000/export_csv.php) berikut.
+
+Cukup sekilian tutorial ini, semoga bermanfaat.
+
+Sumber: https://www.codexworld.com/export-data-to-csv-file-using-php-mysql/
+
+
+
+
