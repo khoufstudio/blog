@@ -17,7 +17,11 @@ query PostsByID($id: String!) {
   mdx(
     id: { eq: $id }
   ){
-    body
+    id,
+    body,
+    fields {
+      slug
+    }, 
     frontmatter {
       title
       date(formatString: "Do MMMM YYYY", locale: "id")
@@ -30,14 +34,21 @@ query PostsByID($id: String!) {
 `
 
 export default ({ data }) => {
-  const { frontmatter, body } = data.mdx
+  const { id, frontmatter, body, fields } = data.mdx
   const title = frontmatter.title
+  const disqusConfig = {
+    url: 'https://khoufstudio.my.id/' + fields.slug,
+    identifier: id,
+    title: frontmatter.title
+  }
+
   return (
     <Layout title={title}>
       <div className="mt-4" />      
       <h1>{frontmatter.title}</h1>
       <p className="font-weight-lighter">{frontmatter.date}</p>
       <MDXRenderer components={components}>{body}</MDXRenderer>
+      <Disqus config={disqusConfig}></Disqus>
     </Layout>
   )
 }

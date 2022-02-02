@@ -11,7 +11,7 @@ const blogPost = `${rootFolder}/${thisYear}/${blogPostTitle}/index.mdx`
 
 function callback(err) {
   if (err) throw err
-  console.log('error coy')
+  console.log(err)
 }
 
 // create directory
@@ -30,3 +30,16 @@ if (!fs.existsSync(blogPostFolder)) {
 if (!fs.existsSync(blogPost)) {
   fs.copyFile('assets/BlogPostTemplate/index.mdx', blogPost, callback)
 }
+
+// change date created
+fs.readFile(blogPost, 'utf8', (err, data) => {
+  if (err) throw err
+  let dateNow = new Date().toISOString().split('T')[0]
+  console.log(dateNow)
+  let result = data.replace(/1970-01-01/g, dateNow)
+
+  fs.writeFile(blogPost, result, (err) => {
+    if (err) throw err
+    console.log('New Post has been created')
+  })
+})
