@@ -1,0 +1,45 @@
+---
+title: "Menjalankan Ubuntu di Docker 🐳"
+date: 2022-01-06
+published: true
+thumbnail: docker-tutorial.png
+tags: ["docker", "ubuntu"]
+---
+
+
+
+## Menginstall Ubuntu
+
+Di terminal/cli jalankan perintah dibawah untuk mendownload image Ubuntu terbaru. 
+
+````bash
+$ docker pull ubuntu
+````
+
+Kemudian langkah berikutnya kita akan membuat docker container untuk menjalankan Ubuntu di PC/Laptop kita dengan perintah berikut:
+
+````bash
+$ docker run --name ubuntu_local -it ubuntu /bin/bash
+````
+
+Kita bisa mengganti `ubuntu_local` dengan nama yang akan digunakan sebagai nama container kita. Setelah docker container telah dibuat, kita akan langsung masuk ke dalam bash shell dengan yang muncul di layar seperti **"root@5fdfed5e30db:/#"**. Catatan, kombinasi 5fdfed5e30db adalah random, dan akan berbeda untuk setiap orang. 
+Di dalam container ubuntu yang telah dibuat, kita bisa melakukan aktivitas seperti di ubuntu yang terinstal di komputer. 
+
+## Keluar dari Container
+Untuk keluar dari container ubuntu yang telah dibuat kita bisa mengetik `exit`. Dengan mengetik perintah tersebut, kita akan kembali ke shell pc/komputer kita dan **container tersebut berubah menjadi offline**. 
+
+## Restart Container
+Untuk kembali masuk ke container ubuntu tadi, kita bisa mengetik perintah berikut:
+
+````bash
+$ docker start -i ubuntu_local
+````
+
+## Hapus Container
+Untu menghapus container kita bisa jalankan perintah:
+````bash
+docker container rm ubuntu_local
+
+````
+
+Sumber: https://dev.to/netk/getting-started-with-docker-running-an-ubuntu-image-4lk9

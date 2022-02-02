@@ -1,0 +1,35 @@
+---
+title: "Mengambil URL Parameter"
+date: 2021-12-28
+tags: ["JS Basic"]
+thumbnail: js-tutorial-logo.png
+published: true
+---
+
+Dengan javascript kita bisa mengambil url parameter. Misal urlnya adalah `https://example.com/?product=shirt&color=blue&newuser&size=m` 
+
+langkah pertama, kita dapat mengambil parameter url nya dengan `window.location.search`
+
+`````javascript
+const queryString = window.location.search
+console.log(queryString)
+// ?product=shirt&color=blue&newuser&size=m
+
+`````
+
+Kemudian kita dapat memecahnya (_parse_) parameter tersebut dengan menggunakan `URLSearchParams`:
+
+`````javascript
+const urlParams = new URLSearchParams(queryString)
+`````
+
+Langkah berikutnya kita bisa mengambil nilai-nilai dari parameter tersebut seperti product, color, dan size. Caranya adalah dengan menggunakan fungsi **urlParams.get('nama_parameter')**. 
+Ganti `nama_parameter` dengan parameter yang ingin diambil nilainya. Lihat contoh di bawah ini: 
+
+`````javascript
+const product = urlParams('product')
+console.log(product)
+// shirt
+`````
+
+Sumber: https://www.sitepoint.com/get-url-parameters-with-javascript/
