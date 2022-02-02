@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Layout from '../Layout'
 import { Disqus } from 'gatsby-plugin-disqus'
+import CategoryBadge from '../CategoryBadge'
 
 import CodeBlock from '../CodeBlock' 
 
@@ -24,6 +25,7 @@ query PostsByID($id: String!) {
     }, 
     frontmatter {
       title
+      tags
       date(formatString: "Do MMMM YYYY", locale: "id")
       thumbnail {
         publicURL
@@ -46,7 +48,10 @@ export default ({ data }) => {
     <Layout title={title}>
       <div className="mt-4" />      
       <h1>{frontmatter.title}</h1>
-      <p className="font-weight-lighter">{frontmatter.date}</p>
+      <div className="d-flex">
+        <p className="font-weight-lighter mr-4">{frontmatter.date}</p>
+        <CategoryBadge tags={frontmatter.tags} />
+      </div>
       <MDXRenderer components={components}>{body}</MDXRenderer>
       <Disqus config={disqusConfig}></Disqus>
     </Layout>
