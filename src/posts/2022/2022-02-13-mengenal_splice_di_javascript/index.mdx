@@ -1,0 +1,44 @@
+---
+title: "Mengenal splice di Javascript"
+date: 2022-02-13
+thumbnail: js-tutorial-logo.png
+tags: ["JS Basic"]
+published: false
+---
+
+**splice()** merupakan fungsi yang mengubah array dengan menghapus atau mengganti salah satu nilai, serta dapat pula menambahkan satu atau lebih nilai di posisi (index) tertentu. 
+Sebagai contoh perhatikan contoh di bawah ini: 
+
+`````javascript
+var bulan = ['Januari', 'Maret', 'Juni']
+bulan.splice(1, 0, 'Februari') // insert pada index = 1
+
+console.log(bulan)
+// output yang diharapkan: Array ['Januari', 'Februari', 'Maret', 'Juni']
+
+bulan.splice(4, 1, 'Mei') // mengganti pada index = 4 ('Juni')
+console.log(bulan)
+// output yang diharapkan: Array ['Januari', 'Februari', 'Maret', 'Mei']
+`````
+
+
+## Sintaks
+`````
+splice(start)
+splice(start, deleteCount)
+splice(start, deleteCount, item1)
+splice(start, deleteCount, item1, item2, itemN)
+`````
+
+### Parameter
+`start` 
+Indeks awal perubahan pada array. Jika parameter ini tidak diisi maka akan terhapus seluruh data pada array.
+
+`deleteCount` 
+Jumlah nilai yang akan dihapus di suatu array, dimulai dari index = `start`. Paramater ini **tidak wajib** digunakan.
+
+`item1, item2, itemN`
+Ini adalah sekumpulan parameter yang akan dimasukan kedalam array, yang mana dimulai dari index `start`. 
+Paramater ini **tidak wajib** digunakan.
+
+sumber: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
