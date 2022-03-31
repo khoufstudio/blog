@@ -1,0 +1,75 @@
+---
+title: "Menginstal Redis menggunakan Docker"
+date: 2022-02-28
+published: true
+thumbnail: redis-tutorial.png
+tags: ["docker", "redis"]
+---
+
+<p style="text-align: justify;">
+  <strong>Redis</strong> adalah singkatan dari Remote Dictionary Server, adalah penyimpanan data dalam memori (RAM) yang dapat digunakan sebagai database, cache dan message broker. Redis merupakan database berbasis key-value, yang mana berbeda dengan database lain semisal MySQL ataupun dari varian database No-SQL seperti MongoDB. Kemudian Redis menggunakan memori (RAM) untuk menyimpan data sehingga lebih cepat dalam pemrosesannya, sementara database lain umumnya menggunakan hardisk.  
+</p>
+
+## Instal dan jalankan Redis
+Caranya cukup mudah, yaitu dengan menjalankan perintah dibawah ini:
+
+````bash
+$ docker run --name belajar-redis -p 6379:6379 -d redis
+````
+
+Perintah diatas akan melakukan beberapa perintah berikut:
+1. Melakukan pull (download) image redis terbaru dari Dockerhub. Jika sudah ada sebelumnya, maka tidak akan download lagi, tetapi akan menggunakan image yang telah ada.
+2. Membuat dan menjalankan container dan memberikannya nama: **belajar-redis**
+3. Mengekspos port dari container redis 6379 (setelah tanda titik dua), ke port 6379 (sebelum tanda titik dua) komputer kita (host)
+4. flag -d (detach mode) yaitu proses akan dijalankan di background
+
+Setelah menjalankan perintah diatas, kita dapat mengeceknya dengan mengetik **docker ps**, kalo instalasinya berhasil kita bisa lihat container dengan NAMES = belajar-redis.
+
+## Menggunakan Redis di dalam container
+Kita sudah menginstal redis dan menjalankannya, akan tetapi kita belum bisa menggunakannya. Cara untuk menggunakannya, kita harus masuk kedalam container Redis yang telah dibuat terlebih dahulu, yaitu dengan mengetik perintah berikut:
+
+
+````bash
+$ docker exec -it belajar-redis sh
+````
+
+Perintah diatas akan melakukan beberapa perintah berikut: 
+1. Jalankan 'shell' di dalam redis container yang bernama **belajar-redis**
+2. Tampilkan command prompt
+
+Kemudian kita bisa menjalankan `redis-cli` (Redis command-line interface) dengan mengetik **redis-cli** pada command prompt tersebut. Kita bisa melakukan test seperti berikut:
+
+````
+# redis-cli
+127.0.0.1:6379> ping
+PONG
+127.0.0.1:6379> set name Fulan
+OK
+127.0.0.1:6379> get name
+"Fulan"
+127.0.0.1:6379> 
+
+````
+
+## Menggunakan Redis tanpa masuk ke dalam container
+Kita sudah tahu cara menggunakan redis di dalam container, akan tetapi hal itu kurang praktis karena kita harus menjalankan beberapa perintah. 
+Sekarang kita akan akan menjalankannya tanpa harus masuk dulu ke dalam container. Untuk melakukannya kita harus menginstall `redis-cli`. Bagi pengguna Ubuntu bisa menjalankan perintah berikut: 
+
+````bash
+$ sudo apt install redis-tools
+````
+
+Untuk OS lain silahkan cari sendiri ya. hehe
+Sekarang, coba ketik **redis-cli** di terminal/cmd PC/Laptop kita. Jika muncul seperti halnya kita menjalankan di dalam container, maka selamat kita sudah berhasil menginstall dan menjalankan redis di laptop/pc kita.  
+
+## Tambahan
+Ketika kita menjalankan sebuah container, kemudian kita restart PC/Laptop kita maka yang akan terjadi adalah container yang kita jalankan terakhir akan berhenti, harus dijalankan ulang. Jika kita ingin agar container kita jalan kembali otomatis setelah PC/Laptop direstart atau shutdown maka kita bisa menjalankan perintah berikut:
+
+````bash
+$ docker update --restart unless-stopped belajar-redis
+````
+
+Sumber: 
+- https://medium.com/idomongodb/installing-redis-server-using-docker-container-453c3cfffbdf
+- https://stackoverflow.com/questions/21795340/linux-install-redis-cli-only
+- https://docs.docker.com/config/containers/start-containers-automatically/
