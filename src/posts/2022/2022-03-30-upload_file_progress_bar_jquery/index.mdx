@@ -6,7 +6,12 @@ thumbnail: php-tutorial-logo.png
 tags: ["PHP", "JS Basic", "JQuery"]
 ---
 
-Struktur Folder
+Di postingan kali ini kita akan belajar untuk membuat aplikasi upload file menggunakan PHP. 
+Di aplikasi yang akan kita buat, kita bisa mengupload file dengan menglik tombol upload atau dengan drag and drop. 
+Saat proses upload berlangsung akan ada progress bar untuk menunjukan progres file yang kita upload terkirim ke server. 
+Tanpa berlama-lama, silahkan buat folder kemudian buatlah file-file di bawah ini: 
+
+## Struktur File dan Folder Projek
 `````
 ├── index.html
 ├── script.js
@@ -14,6 +19,7 @@ Struktur Folder
 └── uploads/
 `````
 
+index.html
 `````html
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +60,8 @@ Struktur Folder
 `````
 <img src="tampilan_upload.png" />
 
+
+script.js
 `````javascript
 function drop(e) {
   e.stopPropagation()
@@ -145,6 +153,7 @@ function uploadData(formData) {
 }
 `````
 
+upload.php
 `````
 <?php
 
@@ -169,6 +178,7 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $location)) {
 
 echo json_encode($returnArray);
 `````
+
 Source code: https://github.com/khoufstudio/upload-file-drag-n-drop-with-progressbar-jquery-php
 
 Sumber: 
