@@ -1,13 +1,13 @@
 ---
 title: "Upload File menggunakan drag and drop progressbar dengan jquery dan PHP"
 date: 2022-03-30
-published: false
+published: true
 thumbnail: php-tutorial-logo.png
 tags: ["PHP", "JS Basic", "JQuery"]
 ---
 
-Di postingan kali ini kita akan belajar untuk membuat aplikasi upload file menggunakan PHP. 
-Di aplikasi yang akan kita buat, kita bisa mengupload file dengan menglik tombol upload atau dengan drag and drop. 
+Pada postingan kali ini kita akan belajar untuk membuat aplikasi upload file menggunakan PHP. 
+Di aplikasi ini kita bisa mengupload file dengan menglik tombol upload atau dengan drag and drop. 
 Saat proses upload berlangsung akan ada progress bar untuk menunjukan progres file yang kita upload terkirim ke server. 
 Tanpa berlama-lama, silahkan buat folder kemudian buatlah file-file di bawah ini: 
 
@@ -18,8 +18,16 @@ Tanpa berlama-lama, silahkan buat folder kemudian buatlah file-file di bawah ini
 ├── upload.php
 └── uploads/
 `````
+<br />
+<br />
 
-index.html
+## File HTML
+Pada file html ini kita akan menambahkan `<input id="file"` sebagai input file untuk upload. 
+Di sini input tersebut akan disembunyikan, sebagai gantinya fungsi upload akan ditrigger oleh `<div id="uploadfile"` ketika mengklik atau mendrag and drop. 
+Ketika ada trigger tersebut, `<input id="file"` akan berisi file yang akan diupload.
+Selengkapnya silahkan lihat kode dibawah ini.
+
+**index.html**
 `````html
 <!DOCTYPE html>
 <html lang="en">
@@ -58,10 +66,16 @@ index.html
 </body>
 </html>
 `````
-<img src="tampilan_upload.png" />
+Tampilan dari kode di atas kurang lebih akan menjadi seperti ini: 
 
+![Tampilan Aplikasi](./tampilan_upload.png)
 
-script.js
+## File Javascript
+Kode javascript di bawah merupakan rangkaian kode untuk menghandle drag and drop atau klik update `<div class="upload-area"`.
+Saat file telah dipilih kemudian aplikasi akan mengirimkan ke server dalam bentuk `FormData`, setelah itu data dikirim ke server.
+Pada saat proses mengiriman data, `<div class="progress-bar"` akan berubah panjangnya sesuai dengan presentasi upload file nya. 
+
+**script.js**
 `````javascript
 function drop(e) {
   e.stopPropagation()
@@ -152,9 +166,12 @@ function uploadData(formData) {
   })
 }
 `````
+## File PHP
+File `upload.php` bertugas untuk mengupload file ke folder `uploads/`. Setelah sukses diupload maka file php ini akan mengembalikan output dalam bentuk JSON, yang berisi nama file, ukuran, dan url  file yang diupload. Tanpa berlama-lama berikut kode selengkapnya: 
 
-upload.php
-`````
+**upload.php**
+
+`````c
 <?php
 
 $fileName = $_FILES['file']['name'];
@@ -184,3 +201,4 @@ Source code: https://github.com/khoufstudio/upload-file-drag-n-drop-with-progres
 Sumber: 
 - https://makitweb.com/drag-and-drop-file-upload-with-jquery-and-ajax/
 - https://www.laravelcode.com/post/how-to-files-upload-with-progress-bar-help-of-jquery-ajax-php
+
